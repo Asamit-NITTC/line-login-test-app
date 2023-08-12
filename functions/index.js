@@ -2,13 +2,12 @@ const express = require("express");
 const functions = require("firebase-functions");
 const axios = require('axios');
 const app = express();
-const port = 3001;
+//const port = 3001;
 require('dotenv').config();
 
 const REDIRECT_URI = process.env.REDIRECT_URI;
 const CLIENT_ID = process.env.CLIENT_ID;
 const CLIENT_SECRET = process.env.CLIENT_SECRET;
-
 
 app.get("/", (req, res) => {
     res.send('<h1>LINEログインテストアプリ</h1><a href="/login">LINEでログイン</a>');
@@ -38,7 +37,7 @@ app.get("/callback", (req, res) => {
                 client_secret: CLIENT_SECRET,
             }, {
                 headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded' 
+                    'Content-Type': 'application/x-www-form-urlencoded'
                 }
             }).catch(err => {
                 throw new Error('Failed to issue access token' + err.message);
