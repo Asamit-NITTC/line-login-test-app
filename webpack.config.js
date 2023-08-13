@@ -8,6 +8,7 @@ module.exports = {
         path: path.resolve(__dirname,  './dist'),
         //path: path.resolve('dist'),
         filename: 'index_bundle.js',
+        publicPath: '/', // assetに対するベースURL
     },
     // target: 'web',
     devServer: {
@@ -20,6 +21,7 @@ module.exports = {
         open: true,
         hot: true,
         liveReload: true,
+        historyApiFallback: true, // これ重要
     },
     resolve: {
         extensions: ['.js', '.jsx', '.json'],

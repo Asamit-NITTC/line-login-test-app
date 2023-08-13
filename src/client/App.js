@@ -1,11 +1,18 @@
 import React from "react";
+import { Routes, Route } from "react-router-dom";
+import { Home } from "./routes/Home";
+import { Profile } from "./routes/Profile";
+import { NotFound } from "./routes/NotFound";
 
 const App = () => {
     return (
-        <>
-            <h1>テストアプリ</h1>
-            <a href="/login">LINEでログイン</a>
-        </>
+        <div>
+            <Routes>
+                <Route path="/" element={ <Home /> } />
+                <Route path="/profile" element={ <Profile /> } />
+                <Route path="*" element={ <NotFound /> } />
+            </Routes>
+        </div>
     )
 }
 
