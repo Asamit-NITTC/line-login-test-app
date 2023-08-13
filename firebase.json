@@ -1,7 +1,7 @@
 {
   "hosting": {
     "target": "main",
-    "public": "hosting/public",
+    "public": "src/client/public",
     "rewrites": [{
       "source": "**",
       "function": "app"
@@ -14,7 +14,7 @@
   },
   "functions": [
     {
-      "source": "functions",
+      "source": "src/server",
       "codebase": "default",
       "ignore": [
         "node_modules",
