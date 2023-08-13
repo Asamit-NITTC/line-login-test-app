@@ -2,6 +2,7 @@ const express = require("express");
 const functions = require("firebase-functions");
 const axios = require('axios');
 const app = express();
+const path = require("path");
 //const port = 3001;
 require('dotenv').config();
 
@@ -10,7 +11,8 @@ const CLIENT_ID = process.env.CLIENT_ID;
 const CLIENT_SECRET = process.env.CLIENT_SECRET;
 
 app.get("/", (req, res) => {
-    res.send('<h1>LINEログインテストアプリ</h1><a href="/login">LINEでログイン</a>');
+    //res.send('<h1>LINEログインテストアプリ</h1><a href="/login">LINEでログイン</a>');
+    res.sendFile(path.resolve('./', 'build', 'index.html'))
 })
 
 app.get("/login", (req, res) => {
