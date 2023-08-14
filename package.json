@@ -12,7 +12,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint src --fix 'src/**/*.js'",
     "format": "prettier --write src/**/*.js",
-    "lint-fix": "run-s lint format"
+    "lint-fix": "run-s lint format",
+    "prepare": "husky install"
   },
   "author": "shun-harutaro",
   "license": "MIT",
@@ -45,11 +46,11 @@
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged"
-    },
-    "lint-staged": {
-      "src/**/*.js": [
-        "npm run lint-fix"
-      ]
     }
+  },
+  "lint-staged": {
+    "src/**/*.js": [
+      "npm run lint-fix"
+    ]
   }
 }
