@@ -1,21 +1,26 @@
 const express = require("express");
-const functions = require("firebase-functions");
+//const functions = require("firebase-functions");
 const axios = require('axios');
 const app = express();
 const path = require("path");
-//const port = 3001;
+const port = 3001;
 require('dotenv').config();
 
-const REDIRECT_URI = process.env.REDIRECT_URI;
+const NODE_ENV = process.env.NODE_ENV;
+const REDIRECT_URI = NODE_ENV === 'production' ? process.env.REDIRECT_URI : 'http://localhost:8080/api/callback';
 const CLIENT_ID = process.env.CLIENT_ID;
 const CLIENT_SECRET = process.env.CLIENT_SECRET;
 
+app.use(express.static(path.resolve('./', 'dist')));
+
+/*
 app.get("/", (req, res) => {
     //res.send('<h1>LINEログインテストアプリ</h1><a href="/login">LINEでログイン</a>');
     res.sendFile(path.resolve('./', 'build', 'index.html'))
 })
+*/
 
-app.get("/login", (req, res) => {
+app.get("/api/login", (req, res) => {
     let baseUrl = "https://access.line.me/oauth2/v2.1/authorize";
     const params = new URLSearchParams({
         response_type: "code",
@@ -28,7 +33,7 @@ app.get("/login", (req, res) => {
     res.redirect(301, url.href);
 })
 
-app.get("/callback", (req, res) => {
+app.get("/api/callback", (req, res) => {
     (async() => {
         try {
             const issueAccessToken = await axios.post('https://api.line.me/oauth2/v2.1/token', {
@@ -66,10 +71,15 @@ app.get("/callback", (req, res) => {
         }
     })();
 })
-/*
+
+app.get('*', (req, res) => {
+    res.sendFile(path.resolve('./', 'dist', 'index.html'))
+})
+
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`);
 })
-*/
 
+/*
 exports.app = functions.https.onRequest(app);
+*/
