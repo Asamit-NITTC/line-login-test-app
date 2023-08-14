@@ -19,7 +19,7 @@ app.get("/", (req, res) => {
 })
 */
 
-app.get("/login", (req, res) => {
+app.get("/api/login", (req, res) => {
     let baseUrl = "https://access.line.me/oauth2/v2.1/authorize";
     const params = new URLSearchParams({
         response_type: "code",
@@ -32,7 +32,7 @@ app.get("/login", (req, res) => {
     res.redirect(301, url.href);
 })
 
-app.get("/callback", (req, res) => {
+app.get("/api/callback", (req, res) => {
     (async() => {
         try {
             const issueAccessToken = await axios.post('https://api.line.me/oauth2/v2.1/token', {
