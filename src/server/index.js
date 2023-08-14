@@ -6,7 +6,8 @@ const path = require("path");
 const port = 3001;
 require('dotenv').config();
 
-const REDIRECT_URI = process.env.REDIRECT_URI;
+const NODE_ENV = process.env.NODE_ENV;
+const REDIRECT_URI = NODE_ENV === 'production' ? process.env.REDIRECT_URI : 'http://localhost:8080/api/callback';
 const CLIENT_ID = process.env.CLIENT_ID;
 const CLIENT_SECRET = process.env.CLIENT_SECRET;
 
