@@ -9,7 +9,10 @@
     "build": "webpack --config ./webpack.prod.js",
     "dev": "NODE_ENV=development run-p client server",
     "start": "NODE_ENV=production run-p build server",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint src --fix 'src/**/*.js'",
+    "format": "prettier --write src/**/*.js",
+    "lint-fix": "run-s lint format"
   },
   "author": "shun-harutaro",
   "license": "MIT",
@@ -17,9 +20,15 @@
     "@babel/core": "^7.22.10",
     "@babel/preset-react": "^7.22.5",
     "babel-loader": "^9.1.3",
+    "eslint": "^8.47.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-react": "^7.33.1",
     "html-webpack-plugin": "^5.5.3",
+    "husky": "^8.0.3",
+    "lint-staged": "^14.0.0",
     "nodemon": "^3.0.1",
     "npm-run-all": "^4.1.5",
+    "prettier": "^3.0.1",
     "webpack": "^5.88.2",
     "webpack-cli": "^5.1.4",
     "webpack-dev-server": "^4.15.1",
@@ -32,5 +41,15 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.15.0"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    },
+    "lint-staged": {
+      "src/**/*.js": [
+        "npm run lint-fix"
+      ]
+    }
   }
 }
