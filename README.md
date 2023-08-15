@@ -6,20 +6,18 @@
 - Hosting
     - React
 
-
 ## Getting Started
-
 First, prepare .env file and set API key.
 ```sh
-touch ./backend/functions/.env
-echo "REDIRECT_URI=https://xxxxx/callback" >> .env
+touch .env
+echo "REDIRECT_URI=localhost:8080/api/callback" >> .env
 echo "CLIENT_ID=xxxxxxxxxx" >> .env
 echo "CLIENT_SECRET=xxxxxxxxxxxxxxxxxx" >> .env
 ```
 Second, `npm i` to install dependencies.
 And then run the development server:
 ```sh
-firebase serve --only functions,hosting
+npm run dev
 ```
 
 ## Setup
@@ -29,8 +27,23 @@ npm install -g firebase-tools
 firebase login
 ```
 
+## Local development
+### development server
+```sh
+npm run dev
+```
+### Emulator
+```sh
+touch ./src/server/.env.local
+echo "REDIRECT_URI=localhost:8080/api/callback" >> .env
+npm run build
+firebase emulators:start
+```
+
 ## Deploy on Firebase
 ```sh
+touch ./src/server/.env
+echo "REDIRECT_URI=https://------.web.app/api/callback" >> .env
 npm run build
 firebase deploy
 ```
