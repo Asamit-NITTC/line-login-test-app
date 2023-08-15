@@ -6,12 +6,19 @@ const port = 3000;
 require("dotenv").config();
 
 const NODE_ENV = process.env.NODE_ENV;
-const REDIRECT_URI =
-  NODE_ENV === "development"
-    ? "http://localhost:8080/api/callback"
-    : process.env.REDIRECT_URI;
+const REDIRECT_URI = process.env.REDIRECT_URI;
 const CLIENT_ID = process.env.CLIENT_ID;
 const CLIENT_SECRET = process.env.CLIENT_SECRET;
+
+/*
+app.get("/", (req, res) => {
+  res.send("/");
+  if (!process.env.CLIENT_ID){
+    console.error("環境変数CLIENT_IDが設定されていません！");
+    process.exit();
+  }
+})
+*/
 
 app.get("/api/login", (req, res) => {
   let baseUrl = "https://access.line.me/oauth2/v2.1/authorize";
@@ -84,5 +91,9 @@ if (NODE_ENV === "development") {
     console.log(`Example app listening on port ${port}`);
   });
 } else {
-  exports.app = functions.https.onRequest(app);
+  exports.app = functions
+    .runWith({
+      secrets: ['CLIENT_ID', 'CLIENT_SECRET']
+    })
+    .https.onRequest(app);
 }
