@@ -2,26 +2,13 @@ const express = require("express");
 const functions = require("firebase-functions");
 const axios = require("axios");
 const app = express();
-const path = require("path");
-//const port = 3001;
+const port = 3000;
 require("dotenv").config();
 
 const NODE_ENV = process.env.NODE_ENV;
-const REDIRECT_URI =
-  NODE_ENV === "production"
-    ? process.env.REDIRECT_URI
-    : "http://localhost:8080/api/callback";
+const REDIRECT_URI = process.env.REDIRECT_URI;
 const CLIENT_ID = process.env.CLIENT_ID;
 const CLIENT_SECRET = process.env.CLIENT_SECRET;
-
-app.use(express.static(path.resolve("./", "dist")));
-
-/*
-app.get("/", (req, res) => {
-    //res.send('<h1>LINEログインテストアプリ</h1><a href="/login">LINEでログイン</a>');
-    res.sendFile(path.resolve('./', 'build', 'index.html'))
-})
-*/
 
 app.get("/api/login", (req, res) => {
   let baseUrl = "https://access.line.me/oauth2/v2.1/authorize";
@@ -84,12 +71,19 @@ app.get("/api/callback", (req, res) => {
 });
 
 app.get("/api/*", (req, res) => {
-    res.write("Error");
-    res.end();
+  res.write("Error");
+  res.end();
 });
-/*
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`);
-});
-*/
-exports.app = functions.https.onRequest(app);
+
+if (NODE_ENV === "development") {
+  app.listen(port, () => {
+    console.log("development mode");
+    console.log(`Example app listening on port ${port}`);
+  });
+} else {
+  exports.app = functions
+    .runWith({
+      secrets: ["CLIENT_ID", "CLIENT_SECRET"],
+    })
+    .https.onRequest(app);
+}

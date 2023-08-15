@@ -5,16 +5,18 @@
   "main": "index.js",
   "scripts": {
     "client": "webpack-dev-server --config ./webpack.dev.js",
-    "server": "nodemon src/server/index.js",
+    "server": "NODE_ENV=development nodemon src/server/index.js",
     "build": "webpack --config ./webpack.prod.js",
-    "dev": "NODE_ENV=development run-p client server",
-    "start": "NODE_ENV=production run-p build server",
+    "dev": "run-p client server",
+    "serve": "firebase emulators:start",
+    "start": "run-s build serve",
+
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint src --fix 'src/**/*.js'",
     "format": "prettier --write src/**/*.js",
     "lint-fix": "run-s lint format",
     "prepare": "husky install",
-    "serve": "firebase emulators:start --only functions",
+
     "shell": "firebase functions:shell",
     "deploy": "firebase deploy --only functions",
     "logs": "firebase functions:log"
