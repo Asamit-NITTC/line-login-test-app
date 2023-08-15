@@ -34,12 +34,16 @@ npm run dev
 ```
 ### Emulator
 ```sh
+touch ./src/server/.env.local
+echo "REDIRECT_URI=localhost:8080/api/callback" >> .env
 npm run build
 firebase emulators:start
 ```
 
 ## Deploy on Firebase
 ```sh
+touch ./src/server/.env
+echo "REDIRECT_URI=https://------.web.app/api/callback" >> .env
 npm run build
 firebase deploy
 ```
