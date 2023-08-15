@@ -23,5 +23,13 @@
         "firebase-debug.*.log"
       ]
     }
-  ]
+  ],
+  "emulators": {
+      "hosting": {
+        "port": "8080"
+      },
+      "functions": {
+        "port": "3000"
+      }
+  }
 }

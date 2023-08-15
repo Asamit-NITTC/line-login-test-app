@@ -14,10 +14,10 @@ module.exports = merge(common,  {
         liveReload: true,
         historyApiFallback: true, // これ重要
         host: 'localhost',
-        port: 5002,
+        port: 8080,
         proxy: {
             '/api/**': {
-                target: 'http://localhost:5001',
+                target: 'http://localhost:3000',
                 secure: false,
                 logLevel: 'debug',
             }

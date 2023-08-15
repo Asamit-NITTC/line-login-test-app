@@ -5,11 +5,11 @@
   "main": "index.js",
   "scripts": {
     "client": "webpack-dev-server --config ./webpack.dev.js",
-    "_server": "nodemon src/server/index.js",
+    "server": "NODE_ENV=development nodemon src/server/index.js",
     "build": "webpack --config ./webpack.prod.js",
-    "_dev": "NODE_ENV=development run-p client _server",
+    "dev": "NODE_ENV=development run-p client server",
     "serve": "firebase emulators:start",
-    "start": "NODE_ENV=production run-p build serve",
+    "start": "NODE_ENV=production run-s build serve",
 
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint src --fix 'src/**/*.js'",
