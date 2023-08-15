@@ -10,16 +10,6 @@ const REDIRECT_URI = process.env.REDIRECT_URI;
 const CLIENT_ID = process.env.CLIENT_ID;
 const CLIENT_SECRET = process.env.CLIENT_SECRET;
 
-/*
-app.get("/", (req, res) => {
-  res.send("/");
-  if (!process.env.CLIENT_ID){
-    console.error("環境変数CLIENT_IDが設定されていません！");
-    process.exit();
-  }
-})
-*/
-
 app.get("/api/login", (req, res) => {
   let baseUrl = "https://access.line.me/oauth2/v2.1/authorize";
   const params = new URLSearchParams({
@@ -93,7 +83,7 @@ if (NODE_ENV === "development") {
 } else {
   exports.app = functions
     .runWith({
-      secrets: ['CLIENT_ID', 'CLIENT_SECRET']
+      secrets: ["CLIENT_ID", "CLIENT_SECRET"],
     })
     .https.onRequest(app);
 }
