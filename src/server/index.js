@@ -83,10 +83,9 @@ app.get("/api/callback", (req, res) => {
   })();
 });
 
-app.get("*", (req, res) => {
-  console.log("URL");
-  console.log(`URL ${path.resolve("./", "dist", "index.html")}`);
-  res.sendFile(path.resolve("./", "dist", "index.html"));
+app.get("/api/*", (req, res) => {
+    res.write("Error");
+    res.end();
 });
 /*
 app.listen(port, () => {

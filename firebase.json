@@ -3,7 +3,7 @@
     "target": "main",
     "public": "dist",
     "rewrites": [{
-      "source": "**",
+      "source": "/api/**",
       "function": "app"
     }],
     "ignore": [
