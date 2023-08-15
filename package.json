@@ -7,7 +7,7 @@
     "client": "webpack-dev-server --config ./webpack.dev.js",
     "server": "NODE_ENV=development nodemon src/server/index.js",
     "build": "webpack --config ./webpack.prod.js",
-    "dev": "NODE_ENV=development run-p client server",
+    "dev": "run-p client server",
     "serve": "firebase emulators:start",
     "start": "NODE_ENV=production run-s build serve",
 

@@ -2,14 +2,14 @@ const express = require("express");
 const functions = require("firebase-functions");
 const axios = require("axios");
 const app = express();
-const port = 3000
+const port = 3000;
 require("dotenv").config();
 
 const NODE_ENV = process.env.NODE_ENV;
 const REDIRECT_URI =
-  NODE_ENV === "production"
-    ? process.env.REDIRECT_URI
-    : "http://localhost:8080/api/callback";
+  NODE_ENV === "development"
+    ? "http://localhost:8080/api/callback"
+    : process.env.REDIRECT_URI;
 const CLIENT_ID = process.env.CLIENT_ID;
 const CLIENT_SECRET = process.env.CLIENT_SECRET;
 
@@ -78,10 +78,10 @@ app.get("/api/*", (req, res) => {
   res.end();
 });
 
-if (NODE_ENV === 'development') {
+if (NODE_ENV === "development") {
   app.listen(port, () => {
-      console.log("development mode");
-      console.log(`Example app listening on port ${port}`);
+    console.log("development mode");
+    console.log(`Example app listening on port ${port}`);
   });
 } else {
   exports.app = functions.https.onRequest(app);
