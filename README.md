@@ -14,9 +14,10 @@ echo "REDIRECT_URI=localhost:8080/api/callback" >> .env
 echo "CLIENT_ID=xxxxxxxxxx" >> .env
 echo "CLIENT_SECRET=xxxxxxxxxxxxxxxxxx" >> .env
 ```
-Second, `npm i` to install dependencies.
+Second, install dependencies.
 And then run the development server:
 ```sh
+npm i
 npm run dev
 ```
 
@@ -28,14 +29,20 @@ firebase login
 ```
 
 ## Local development
-### development server
+### on Development Server
 ```sh
 npm run dev
 ```
-### Emulator
+### on Emulator
+**NOTE:** You must set `CLIENT_ID` and `CLIENT_SECRET` as Secrets to emulate and deploy on firebase.
+```sh
+firebase functions:secrets:set CLIENT_ID
+firebase functions:secrets:set CLIENT_SECRET
+```
+You only need to do this operation once.
 ```sh
 touch ./src/server/.env.local
-echo "REDIRECT_URI=localhost:8080/api/callback" >> .env
+echo "REDIRECT_URI=localhost:8080/api/callback" >> ./src/server/.env.local
 npm run build
 firebase emulators:start
 ```
@@ -43,7 +50,7 @@ firebase emulators:start
 ## Deploy on Firebase
 ```sh
 touch ./src/server/.env
-echo "REDIRECT_URI=https://------.web.app/api/callback" >> .env
+echo "REDIRECT_URI=https://------.web.app/api/callback" >> ./src/server/.env
 npm run build
 firebase deploy
 ```
