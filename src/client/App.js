@@ -1,6 +1,7 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
 import { Home } from "./routes/Home";
+import { Liff } from "./routes/Liff";
 import { Profile } from "./routes/Profile";
 import { NotFound } from "./routes/NotFound";
 
@@ -9,6 +10,7 @@ const App = () => {
     <div>
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/liff" element={<Liff />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
