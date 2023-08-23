@@ -13,6 +13,7 @@ touch .env
 echo "REDIRECT_URI=localhost:8080/api/callback" >> .env
 echo "CLIENT_ID=xxxxxxxxxx" >> .env
 echo "CLIENT_SECRET=xxxxxxxxxxxxxxxxxx" >> .env
+echo "REACT_APP_LIFF_ID=xxxxxxxxxxxxx" >> .env
 ```
 Second, install dependencies.
 And then run the development server:
@@ -43,6 +44,8 @@ You only need to do this operation once.
 ```sh
 touch ./src/server/.env.local
 echo "REDIRECT_URI=localhost:8080/api/callback" >> ./src/server/.env.local
+touch .env.prod
+echo "REACT_APP_LIFF_ID=xxxxxxxxxxx" >> ./.env.prod
 npm run build
 firebase emulators:start
 ```
