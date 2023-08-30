@@ -5,26 +5,31 @@ export const Liff = () => {
   const [profile, setProfile] = useState("");
   const [post, setPost] = useState("");
   const [message, setMessage] = useState("");
+  const [idToken, setIdToken] = useState("");
+  const [isInClient, setIsInClient] = useState(true);
   const [error, setError] = useState("");
 
-  const getUserInfo = () => {
-    liff.init({ liffId: process.env.REACT_APP_LIFF_ID }).then(() => {
-      setMessage("LIFF init succeeded");
-      if (!liff.isLoggedIn()) {
-        liff.login({}); // ログインしてなければログイン
-      } else if (liff.isInClient()) {
-        liff
-          .getProfile()
-          .then((profile) => {
-            setProfile(profile);
-          })
-          .catch((e) => {
-            setMessage("LIFF init failed.");
-            setError(`${e}`);
-          });
-      }
-    });
+  const initLiff = async () => {
+    setIsInClient(liff.isInClient());
+    try {
+      await liff.init({ liffId: process.env.REACT_APP_LIFF_ID })
+    } catch(err) {
+      setError("Failed to init liff")
+    }
+    setMessage("LIFF init succeeded");
+    if (!liff.isLoggedIn()) {
+      liff.login({});
+    }
   };
+
+  const getUserProfile = async () => {
+    try {
+      const profile = await liff.getProfile();
+      setProfile(profile);
+    } catch(err) {
+      setError("Failed to get profile.")
+    }
+  }
 
   const sendMessages = (message) => {
     liff
@@ -51,8 +56,17 @@ export const Liff = () => {
     sendMessages(post);
   };
 
+  const logoutLiff = () => {
+    liff.logout();
+  }
+
   useEffect(() => {
-    getUserInfo();
+    (async() => {
+      await initLiff();
+      const idToken = liff.getIDToken();
+      setIdToken(idToken);
+      await getUserProfile();
+    })();
   }, []);
 
   return (
@@ -61,12 +75,13 @@ export const Liff = () => {
       {message && <p>{message}</p>}
       <p>userID: {profile.userId}</p>
       <p>displayName: {profile.displayName}</p>
+      <p>IDtoken: {idToken}</p>
       {error && (
         <p>
           <code>{error}</code>
         </p>
       )}
-      <div>
+      {isInClient && <div>
         <h2>投稿は以下から</h2>
         <input
           type="text"
@@ -75,7 +90,8 @@ export const Liff = () => {
           onChange={handleTextChange}
         />
         <input type="submit" onClick={handleSubmit} />
-      </div>
+      </div>}
+      <button onClick={logoutLiff} >ログアウト</button>
     </div>
   );
 };
