@@ -17,7 +17,7 @@ app.get("/api/login", (req, res) => {
     client_id: CLIENT_ID,
     redirect_uri: REDIRECT_URI,
     state: "hoge",
-    scope: "profile",
+    scope: "profile openid",
   });
   const url = new URL(`${baseUrl}?${params}`);
   res.redirect(301, url.href);
@@ -43,6 +43,7 @@ app.get("/api/callback", (req, res) => {
           },
         )
         .catch((err) => {
+          console.log(err);
           throw new Error("Failed to issue access token" + err.message);
         });
       const getUserProfile = await axios
@@ -57,7 +58,9 @@ app.get("/api/callback", (req, res) => {
       res.writeHead(200, {
         "Content-Type": "application/json",
       });
-      res.write(JSON.stringify(getUserProfile.data));
+      console.log(issueAccessToken.data);
+      res.write("profile: " + JSON.stringify(getUserProfile.data));
+      res.write("\nidToken: " + JSON.stringify(issueAccessToken.data.id_token));
       res.end();
     } catch (err) {
       res.writeHead(500, {
